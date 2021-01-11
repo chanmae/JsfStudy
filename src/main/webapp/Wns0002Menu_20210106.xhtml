@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>メニュー</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+	<!--<h:outputStylesheet library="css" name="./css/table-style.css" />-->
+	<link rel="stylesheet" href="./css/table-style.css" />
+</h:head>
+<h:body>
+	<div class="container m-3 p-3">
+		<!--ヘッダーエリア-->
+		<div class="headererea">
+			<div class="text-primary">
+				<!--<h:outputText value="フルスタWGショッピングサイト_メニュー画面"></h:outputText>-->
+				<h2>フルスタWGショッピングサイト_メニュー画面</h2>
+			</div>
+			<div class="mt-2">
+				<h:form id="productsearchform">
+					<h:inputText id="productsearchword"
+						value="#{wns0002MenuBean.getWns0002MenuScreenDto().getItemSearchWord()}" />
+					<!-- メモ：ajaxはexecute属性の値によって動かなくなるので注意 -->
+					<f:ajax event="click" execute="text" listener="#{wns0002MenuBean.productSearch()}"
+						render="productlist">
+						<h:commandButton type="button" class="btn btn-info ml-2" id="productsearchbutton"
+							value="商品検索" />
+					</f:ajax>
+				</h:form>
+			</div>
+		</div>
+		<!--ヘッダーエリア-->
+
+		<!-- メインエリア -->
+		<div class="mainarea m-5">
+			<h3 for="productlist">商品一覧</h3>
+			<!-- <h:form id="productlistform"> -->
+				<h:dataTable id="productlist" var="product"
+					value="#{wns0002MenuBean.getWns0002MenuScreenDto().getProductList()}" class="mt-3" border="1"
+					styleClass="order-table" headerClass="order-table-header"
+					rowClasses="order-table-odd-row,order-table-even-row">
+					<!-- 商品コード -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="商品コード" />
+						</f:facet>
+						<h:outputText id="itemcode" value="#{product.getItemCode()}" />
+					</h:column>
+					<!-- 商品名 -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="商品名" />
+						</f:facet>
+						<h:outputText id="itemname" value="#{product.getItemName()}" />
+					</h:column>
+					<!-- 金額 -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="金額" />
+						</f:facet>
+						<h:outputText id="price" value="#{product.getPrice()}" />
+					</h:column>
+					<!-- 在庫数 -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="在庫数" />
+						</f:facet>
+						<h:outputText id="stockquantity" value="#{product.getStockQuantity()}" />
+					</h:column>
+					<!-- 備考 -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="備考" />
+						</f:facet>
+						<h:outputText id="remarks" value="#{product.getRemarks()}" />
+					</h:column>
+					<!-- 購入数 -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="購入数" />
+						</f:facet>
+						<!-- <h:selectOneMenu>
+						<f:selectItems value="#{product.getPurchaseNumberList()}" var="purchaseNumber" itemLabel=""
+							itemValue="#{purchaseNumber.getPurchaseNumber}" />
+					</h:selectOneMenu> -->
+						<h:inputText id="purchaseNumber" value="#{product.getPurchaseNumber()}" />
+					</h:column>
+					<!-- 詳細確認 -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="詳細確認へ" />
+						</f:facet>
+						<h:form id="addtoshoppingcarform">
+							<f:ajax event="click" listener="#{wns0002MenuBean.AddToShoppingCart()}" execute="@all">
+								<h:commandButton id="addtoshoppingcartbutton" type="button" value="⊕買い物かごに追加"
+									class="btn btn-success" />
+							</f:ajax>
+						</h:form>
+					</h:column>
+				</h:dataTable>
+			<!-- </h:form> -->
+		</div>
+		<!-- フッターエリア -->
+		<div class="footerarea">
+			<div class="row">
+				<h:form>
+					<!-- 購入履歴確認へボタン -->
+					<!-- TODO submitイベントの実装 -->
+					<div class="col-sm">
+						<h:commandButton class="btn btn-primary btn-lg" id="toPurchaseHistoryConfirmationbtn"
+							action="#{wns0002MenuBean.toPurchaseHistoryConfirmation()}" value="購入履歴確認へ" />
+					</div>
+				</h:form>
+				<!-- 商品購入へボタン -->
+				<!-- TODO submitイベントの実装 -->
+				<h:form>
+					<div class="col-sm">
+						<h:commandButton class="btn btn-primary btn-lg" action="#{wns0002MenuBean.toPurchaseProducts()}"
+							value="商品購入へ" />
+					</div>
+				</h:form>
+				<!-- 買い物かごに追加ボタン -->
+				<div>
+					<f:ajax event="click" listener="#{wns0002MenuBean.AddToShoppingCart()}" execute="@all">
+						<h:commandButton id="addtoshoppingcartbutton" type="button" value="⊕買い物かごに追加"
+							class="btn btn-success" />
+					</f:ajax>
+				</div>
+				<!-- 買い物かご確認ボタン -->
+				<!-- TODO submitイベントの実装 -->
+				<h:form>
+					<div class="col-sm">
+						<h:commandButton class="btn btn-info btn-sm" action="#{wns0002MenuBean.checkShoppingCart()}"
+							value="買い物かご確認" />
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</div>
+	<script src="./js/Wns0002Menu.js"></script>
+</h:body>
+
+</html>

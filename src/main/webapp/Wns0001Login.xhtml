@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>ログイン</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <!--<h:outputStylesheet library="css" name="./css/table-style.css" />-->
+    <link rel="stylesheet" href="./css/position-style.css" />
+</h:head>
+<h:body>
+    <div class="container m-3 p-3">
+        <!-- ログイン情報入力エリア -->
+        <div>
+            <div class="text-primary">
+                <h2>
+                    <h:outputText value="【フルスタWG】ネットショッピングサイトログイン画面" />
+                </h2>
+            </div>
+            <div>
+                <p:clock pattern="yyyy/MM/dd hh:mm:ss" />
+            </div>
+            <h:form id="loginform">
+                <div class="m-2">
+                    <!-- TODO バリデーションチェックは必須チェックのみ実装（課題 No.13） -->
+                    <h:inputText id="loginid" required="true" requiredMessage="ログインIDを入力してください。" />
+                </div>
+                <div class="m-2">
+                    <h:inputText id="password" required="true" requiredMessage="パスワードを入力してください。" />
+                </div>
+                <h:commandButton class="btn btn-primary m-2" id="loginbtn" value="ログイン"
+                    action="#{wns0001LoginBean.loginButtonClick()}" />
+            </h:form>
+        </div>
+    </div>
+</h:body>
+
+</html>
